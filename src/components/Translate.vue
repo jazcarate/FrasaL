@@ -46,6 +46,7 @@
           v-on:click="focus = chunk"
           :key="index"
         >{{chunk.translated || chunk.original}}</span>
+        <span v-if="loading > 0">...</span>
       </div>
     </div>
 
@@ -66,6 +67,7 @@ import _ from "lodash";
 
 import Loading from "./Loading.vue";
 import { translate } from "../lib/translate";
+import { getDictionary } from "../lib/api";
 
 export default {
   name: "Translate",
@@ -76,7 +78,7 @@ export default {
     return {
       query: decodeURIComponent(location.hash.substr(1)),
       focus: "",
-      loading: 30,
+      loading: 0,
     };
   },
   computed: {

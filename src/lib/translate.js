@@ -1,5 +1,3 @@
-import dict from "./dictionary.json";
-
 function preserveCase(original, toReplace) {
   if (original == original.toUpperCase()) {
     // Shout
@@ -39,7 +37,7 @@ function translate_(block, word) {
   return [block];
 }
 
-export function translate(block) {
+export function translate(dict, block) {
   const ret = dict.reduce((accum, toTranslate) => {
     return accum.flatMap((x) => translate_(x, toTranslate));
   }, pure(block));
