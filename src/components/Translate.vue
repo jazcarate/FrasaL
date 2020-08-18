@@ -42,10 +42,21 @@
         <span
           v-for="(chunk, index) in translations"
           :class="{ highlight: !!chunk.translated }"
+          v-on:click="focus = chunk"
           :key="index"
         >{{chunk.translated || chunk.original}}</span>
       </div>
     </div>
+
+    <transition name="fade">
+      <div class="lemma" v-if="focus" mode="out-in">
+        <h2>
+          {{focus.original}}
+          <em>(smt.)</em>
+        </h2>
+        <div class="content">Del ingles: "{{focus.english}}"</div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -57,6 +68,7 @@ export default {
   data: function () {
     return {
       query: decodeURIComponent(location.hash.substr(1)),
+      focus: "",
     };
   },
   computed: {
@@ -73,6 +85,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
 .wrapper {
   width: 66%;
   margin: auto;
@@ -80,12 +100,25 @@ export default {
 
 .highlight {
   text-shadow: 0px 0px 7px #42b983;
+  cursor: pointer;
 }
 
 h3 {
   margin: 40px 0 10px;
   a {
     color: #42b983;
+  }
+}
+
+.lemma {
+  h2 {
+    color: #265180;
+    em {
+      font-size: 0.4em;
+    }
+  }
+  .content {
+    margin-left: 10px;
   }
 }
 

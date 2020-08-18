@@ -1,6 +1,6 @@
 const dict = [
-  { frasal: "descansa seguro", spanish: "esta seguro" },
-  { frasal: "foo", spanish: "bar" },
+  { frasal: "descansa seguro", spanish: "esta seguro", english: "rest assured" },
+  { frasal: "foo", spanish: "bar", english: "Bar" },
 ];
 
 function preserveCase(original, toReplace) {
@@ -27,7 +27,7 @@ function translate_(block, word) {
     const match = original.substr(i, word.frasal.length);
     return [
       { original: original.substr(0, i) },
-      { original: match, translated: preserveCase(match, word.spanish) },
+      { ...word, original: match, translated: preserveCase(match, word.spanish) },
       { original: original.substr(i + word.frasal.length) },
     ];
   }
