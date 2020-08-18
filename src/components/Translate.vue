@@ -13,12 +13,19 @@
     <div class="editor-holder">
       <textarea
         v-model="query"
+        class="textarea"
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"
         spellcheck="false"
       ></textarea>
-      <pre><code v-html="htmlQuery"></code></pre>
+      <div class="textarea">
+        <span
+          v-for="(chunk, index) in translations"
+          :class="{ highlight: !!chunk.translated }"
+          :key="index"
+        >{{chunk.original}}</span>
+      </div>
     </div>
 
     <h3>
@@ -31,13 +38,19 @@
       </strong>
     </h3>
     <div class="editor-holder">
-      <span v-html="htmlTranslated"></span>
+      <div class="textarea">
+        <span
+          v-for="(chunk, index) in translations"
+          :class="{ highlight: !!chunk.translated }"
+          :key="index"
+        >{{chunk.translated || chunk.original}}</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { translate, escaped } from "../lib/translate";
+import { translate } from "../lib/translate";
 
 export default {
   name: "Translate",
@@ -47,44 +60,26 @@ export default {
     };
   },
   computed: {
-    translation() {
+    translations() {
       return translate(this.query);
     },
-    htmlQuery() {
-      return this.highlight(({ original }) => original);
-    },
-    htmlTranslated() {
-      return this.highlight(({ translated }) => translated);
-    },
   },
-  methods: {
-    highlight(chooser) {
-      return this.translation
-        .map((translation) => {
-          const { original, translated } = translation;
-          if (translated) {
-            return `<span class="highlight" title="${original}">${chooser(translation)}</span>`;
-          } else {
-            return `${escaped(original)}`;
-          }
-        })
-        .join(" ");
+  watch: {
+    query: function (val) {
+      location.hash = encodeURIComponent(val);
     },
   },
 };
 </script>
 
-<style>
-.highlight {
-  color: red;
-  background: black
-}
-</style>
-
 <style scoped lang="scss">
 .wrapper {
   width: 66%;
   margin: auto;
+}
+
+.highlight {
+  text-shadow: 0px 0px 7px #42b983;
 }
 
 h3 {
@@ -102,9 +97,7 @@ h3 {
   overflow: hidden auto;
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.4);
 
-  textarea,
-  code,
-  span {
+  .textarea {
     width: 100%;
     height: auto;
 
@@ -123,6 +116,7 @@ h3 {
 
     transition: all 0.5s ease-in-out;
     font-family: "Raleway", sans-serif;
+    white-space: pre;
   }
 
   textarea {
