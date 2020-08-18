@@ -1,7 +1,4 @@
-const dict = [
-  { frasal: "descansa seguro", spanish: "esta seguro", english: "rest assured" },
-  { frasal: "foo", spanish: "bar", english: "Bar" },
-];
+import dict from "./dictionary.json";
 
 function preserveCase(original, toReplace) {
   if (original == original.toUpperCase()) {
@@ -21,13 +18,20 @@ function pure(block) {
 
 function translate_(block, word) {
   const { original } = block;
-  const normalize = original.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const normalize = original
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
   const i = normalize.indexOf(word.frasal);
   if (i !== -1) {
     const match = original.substr(i, word.frasal.length);
     return [
       { original: original.substr(0, i) },
-      { ...word, original: match, translated: preserveCase(match, word.spanish) },
+      {
+        ...word,
+        original: match,
+        translated: preserveCase(match, word.spanish),
+      },
       { original: original.substr(i + word.frasal.length) },
     ];
   }

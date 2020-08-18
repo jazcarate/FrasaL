@@ -96,6 +96,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
+  color: #9a9a9a
 }
 
 .material-icons {
