@@ -61,7 +61,7 @@ import Translate from "./components/Translate.vue";
 export default {
   name: "App",
   components: {
-    Translate,
+    Translate, 
   },
 };
 </script>

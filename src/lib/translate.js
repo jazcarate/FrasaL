@@ -43,7 +43,5 @@ export function translate(block) {
   const ret = dict.reduce((accum, toTranslate) => {
     return accum.flatMap((x) => translate_(x, toTranslate));
   }, pure(block));
-
-  console.log({ ret });
   return ret;
 }

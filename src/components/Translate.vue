@@ -38,6 +38,7 @@
       </strong>
     </h3>
     <div class="editor-holder">
+      <Loading v-bind:value="loading" />
       <div class="textarea">
         <span
           v-for="(chunk, index) in translations"
@@ -61,14 +62,21 @@
 </template>
 
 <script>
+import _ from "lodash";
+
+import Loading from "./Loading.vue";
 import { translate } from "../lib/translate";
 
 export default {
   name: "Translate",
+  components: {
+    Loading,
+  },
   data: function () {
     return {
       query: decodeURIComponent(location.hash.substr(1)),
       focus: "",
+      loading: 30,
     };
   },
   computed: {
@@ -76,9 +84,16 @@ export default {
       return translate(this.query);
     },
   },
+  methods: {
+    load: _.debounce(function () {
+      console.log("done");
+      this.loading = 100;
+    }, 2000),
+  },
   watch: {
     query: function (val) {
       location.hash = encodeURIComponent(val);
+      this.load();
     },
   },
 };
