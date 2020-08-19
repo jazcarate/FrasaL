@@ -5,8 +5,8 @@ const translate = require('../src/lib/translate').translate;
 
 
 exports.handler = async (event, context) => {
-    const template = fs.readFileSync('./dist/template.html', 'utf-8');
     console.log({ path: fs.readdirSync('.') });
+    const template = fs.readFileSync('./dist/template.html', 'utf-8');
     const queryParams = new URLSearchParams(event.queryStringParameters)
     const description = translate(dict, queryParams.get("q") || "").map(translation => translation.translated || translation.original).join("");
 
