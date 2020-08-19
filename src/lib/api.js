@@ -1,11 +1,4 @@
-export default {
-    getDictionary: async function () {
-        return [
-            {
-                "frasal": "descansa seguro",
-                "spanish": "esta seguro",
-                "english": "rest assured"
-            }
-        ];
-    }
+export async function getDictionary() {
+    const resp = await fetch("/api/dict");
+    return resp.json();
 }

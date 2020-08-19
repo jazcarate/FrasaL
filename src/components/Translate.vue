@@ -38,7 +38,6 @@
       </strong>
     </h3>
     <div class="editor-holder">
-      <Loading v-bind:value="loading" />
       <div class="textarea">
         <span
           v-for="(chunk, index) in translations"
@@ -46,7 +45,6 @@
           v-on:click="focus = chunk"
           :key="index"
         >{{chunk.translated || chunk.original}}</span>
-        <span v-if="loading > 0">...</span>
       </div>
     </div>
 
@@ -65,25 +63,20 @@
 <script>
 import _ from "lodash";
 
-import Loading from "./Loading.vue";
 import { translate } from "../lib/translate";
-import { getDictionary } from "../lib/api";
 
 export default {
   name: "Translate",
-  components: {
-    Loading,
-  },
   data: function () {
     return {
-      query: decodeURIComponent(location.hash.substr(1)),
+      query: new URLSearchParams(window.location.search).get("q") || "",
       focus: "",
-      loading: 0,
     };
   },
+  props: ["dictionary"],
   computed: {
     translations() {
-      return translate(this.query);
+      return translate(this.dictionary, this.query);
     },
   },
   methods: {
@@ -94,7 +87,7 @@ export default {
   },
   watch: {
     query: function (val) {
-      location.hash = encodeURIComponent(val);
+      window.history.replaceState(null, "", `?q=${val}`);
       this.load();
     },
   },

@@ -6,6 +6,7 @@ npm install
 ```
 
 ### Compiles and hot-reloads for development
+Open in port `37529` to get netlify's functions
 ```
 npm run serve
 ```

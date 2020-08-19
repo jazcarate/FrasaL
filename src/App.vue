@@ -37,7 +37,8 @@
         </ul>
       </div>
 
-      <Translate />
+      <Translate v-if="dictionary" v-bind:dictionary="dictionary" />
+      <Loading v-if="!dictionary" />
       <div class="push"></div>
     </div>
 
@@ -57,11 +58,22 @@
 
 <script>
 import Translate from "./components/Translate.vue";
+import Loading from "./components/Loading.vue";
+import { getDictionary } from "./lib/api";
 
 export default {
   name: "App",
   components: {
-    Translate, 
+    Translate,
+    Loading,
+  },
+  data: function () {
+    return { dictionary: false };
+  },
+  created() {
+    getDictionary().then((dictionary) => {
+      this.dictionary = dictionary;
+    });
   },
 };
 </script>
@@ -96,7 +108,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
-  color: #9a9a9a
+  color: #9a9a9a;
 }
 
 .material-icons {
