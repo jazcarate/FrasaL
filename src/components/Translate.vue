@@ -106,6 +106,10 @@ export default {
 .wrapper {
   width: 66%;
   margin: auto;
+  
+  @media screen and (max-width: 950px) {
+    width: 90%;
+  }
 }
 
 .highlight {

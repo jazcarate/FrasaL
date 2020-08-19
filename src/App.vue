@@ -13,11 +13,11 @@
           <div>
             <ul>
               <li class="active">Translator</li>
-              <li>Linguee</li>
+              <li class="desktop">Linguee</li>
             </ul>
           </div>
         </div>
-        <ul>
+        <ul class="desktop">
           <li>
             <span class="badge-container">
               <a class="shiny" href="#">Download for windows</a>
@@ -79,11 +79,17 @@ export default {
 </script>
 
 <style lang="scss">
+@media screen and (max-width: 950px) {
+  .desktop {
+    visibility: hidden !important;
+    display: none !important;
+  }
+}
+
 #app {
   font-family: "Raleway", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #f1f1f1;
   height: 100%;
 }
 
@@ -91,6 +97,7 @@ html,
 body {
   height: 100%;
   margin: 0;
+  background: #f1f1f1;
 }
 
 .wrapper {
@@ -136,6 +143,11 @@ body {
   display: flex;
   padding: 0 70px 0 80px;
   height: 60px;
+  overflow: hidden;
+
+  @media screen and (max-width: 950px) {
+    padding: 0 20px 0 80px;
+  }
 
   .separator {
     margin: 0 30px 0 16px;
