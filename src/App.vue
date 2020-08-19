@@ -12,7 +12,7 @@
           </div>
           <div>
             <ul>
-              <li class="active">Translator</li>
+              <li class="active">Traducir</li>
               <li class="desktop">Linguee</li>
             </ul>
           </div>
@@ -20,7 +20,7 @@
         <ul class="desktop">
           <li>
             <span class="badge-container">
-              <a class="shiny" href="#">Download for windows</a>
+              <a class="shiny" href="#">Descarga para {{os}}</a>
               <span class="badge">new!!</span>
             </span>
           </li>
@@ -44,7 +44,7 @@
 
     <div class="footer">
       <div class="content">
-        <span role="img" title="love" aria-label="love">♥</span> by
+        <span role="img" title="love" aria-label="love">♥</span> por 
         <a
           target="_blank"
           style="color: unset;"
@@ -74,6 +74,14 @@ export default {
     getDictionary().then((dictionary) => {
       this.dictionary = dictionary;
     });
+  },
+  computed: {
+    os: function () {
+      if (navigator.appVersion.indexOf("Win") != -1) return "Windows";
+      if (navigator.appVersion.indexOf("Mac") != -1) return "Mac";
+      if (navigator.appVersion.indexOf("Linux") != -1) return "Linux";
+      return "ti";
+    },
   },
 };
 </script>

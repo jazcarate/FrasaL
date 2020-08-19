@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <h3>
-      Translate from
+      Traducir de
       <strong>
         <a href="#">
           Julino's broken spanish
@@ -29,7 +29,7 @@
     </div>
 
     <h3>
-      To
+      A
       <strong>
         <a href="#">
           proper spanish
@@ -54,7 +54,7 @@
           {{focus.original}}
           <em>(smt.)</em>
         </h2>
-        <div class="content">Del ingles: "{{focus.english}}"</div>
+        <div class="content">Del inglés: "{{focus.english}}"</div>
       </div>
     </transition>
   </div>
