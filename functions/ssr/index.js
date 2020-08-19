@@ -15,8 +15,8 @@ exports.handler = async (event, context) => {
     var description;
     if(search){
         const dict = await getDictionary();
-        const translation = translate(dict, queryParams.get("q") || "").map(translation => translation.translated || translation.original).join("");
-        description = `Se traduce aproximadamente a '${translation}'`;
+        const translation = translate(dict, search).map(translation => translation.translated || translation.original).join("");
+        description = `'${search}' se traduce aproximadamente a '${translation}'.`;
     } else {
         description = "Descubre qué quiso decir Julio.";
     }
