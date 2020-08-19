@@ -3,9 +3,10 @@ const fs = require('fs');
 const dict = require('./dictionary.json');
 const translate = require('../src/lib/translate').translate;
 
-const template = fs.readFileSync('./dist/template.html', 'utf-8')
 
 exports.handler = async (event, context) => {
+    const template = fs.readFileSync('./dist/template.html', 'utf-8');
+    console.log({ path: fs.readdirSync('.') });
     const queryParams = new URLSearchParams(event.queryStringParameters)
     const description = translate(dict, queryParams.get("q") || "").map(translation => translation.translated || translation.original).join("");
 
