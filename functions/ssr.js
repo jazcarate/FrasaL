@@ -5,9 +5,12 @@ const translate = require('../src/lib/translate').translate;
 
 
 exports.handler = async (event, context) => {
-    console.log({ path: fs.readdirSync('.') });
-    const template = fs.readFileSync('./dist/template.html', 'utf-8');
-    const queryParams = new URLSearchParams(event.queryStringParameters)
+    const queryParams = new URLSearchParams(event.queryStringParameters);
+    
+    const pwd = queryParams.get("pwd") || ".";
+    console.log({ path: fs.readdirSync(pwd) });
+    const template = fs.readFileSync(`${pwd}/template.html`, 'utf-8');
+    
     const description = translate(dict, queryParams.get("q") || "").map(translation => translation.translated || translation.original).join("");
 
     return {
