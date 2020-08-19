@@ -1,19 +1,12 @@
-const faunadb = require('faunadb');
+const { getDictionary } = require('./db');
 
-const q = faunadb.query;
-const client = new faunadb.Client({
-    secret: process.env.FAUNADB_SECRET
-})
 
 exports.handler = async () => {
-    const dict = await client.query(q.Map(
-        q.Paginate(q.Documents(q.Collection('translations'))),
-        q.Lambda(x => q.Get(x))
-    ));
-
+    const dict = await getDictionary();
 
     return {
         statusCode: 200,
-        body: JSON.stringify(dict.data),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dict),
     };
 };
