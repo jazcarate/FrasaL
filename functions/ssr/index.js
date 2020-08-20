@@ -24,7 +24,7 @@ exports.handler = async (event, context) => {
     return {
         statusCode: 200,
         body: template
-            .replace(/\$meta_description/g, `"${description}"`)
+            .replace(/\$meta description/g, description)
             .replace(/\$meta_url/g, `"https://frasal.florius.com.ar/?${queryParams}"`),
     };
 };
