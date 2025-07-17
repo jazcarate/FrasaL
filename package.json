@@ -1,49 +1,25 @@
 {
-  "name": "frasal",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "netlify dev",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build && cp dist/template.html functions/ssr/",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "core-js": "^3.6.5",
-    "lodash": "^4.17.20",
-    "normalize.css": "^8.0.1",
-    "vue": "^2.6.11"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "faunadb": "^3.0.1",
-    "netlify-cli": "^2.59.1",
-    "sass": "^1.26.10",
-    "sass-loader": "^9.0.3",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
+    "name": "frasal",
+    "version": "1.0.0",
+    "description": "FrasaL - Translate Julino's broken spanish to proper spanish",
+    "main": "src/index.ts",
+    "scripts": {
+        "dev": "wrangler dev",
+        "deploy": "wrangler deploy",
+        "build": "echo 'No build step needed - Wrangler handles TypeScript compilation'",
+        "start": "wrangler dev"
     },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
+    "devDependencies": {
+        "wrangler": "^3.0.0",
+        "@cloudflare/workers-types": "^4.0.0",
+        "typescript": "^5.0.0"
+    },
+    "keywords": [
+        "cloudflare-workers",
+        "translation",
+        "spanish",
+        "typescript"
     ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "author": "Florius",
+    "license": "MIT"
 }

@@ -1,25 +1,15 @@
-# frasal
+# FrasaL
 
-## Project setup
-```
-npm install
-```
+## Development
 
-### Compiles and hot-reloads for development
-Open in port `37529` to get netlify's functions
-```
-npm run serve
-```
+A single JS and HTML with [Alpine.js](https://alpinejs.dev/).
 
-### Compiles and minifies for production
-```
-npm run build
-```
+To get Server Side Rendering (mostly on the `meta:description` head tag), the HTML is "enhanced" with a Cloudflare worker
 
-### Lints and fixes files
-```
-npm run lint
-```
+### Cloudflare Worker
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+To setup the cloudflare worker infrastructure, you'll need [Wrangler](https://developers.cloudflare.com/workers/wrangler/install-and-update/). Simplest way is to do it via `npx wrangler dev`.
+
+### Deploy
+
+Push to `main` and let GitHub Action take care of it.

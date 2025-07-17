@@ -2,20 +2,22 @@
 <html lang="en">
 
 <head>
+  <title>FrasaL :: Translate</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta name="description" content="$meta description">
+  <meta name="description" content="Descubre qué quiso decir Julio.">
   <link rel="icon" href="/favicon.ico">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  <title>FrasaL :: Translate</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway&family=Montserrat&display=swap">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="/style.css">
 
   <meta property="og:title" content="FrasaL :: Translate" />
-  <meta property="og:description" content="$meta description" />
-  <meta property="og:url" content="$meta_url" />
+  <meta property="og:description" content="Descubre qué quiso decir Julio." />
   <meta property="og:image" content="https://frasal.florius.com.ar/card.png" />
+
+  <script defer src="/alpinejs%403.14.8.min.js"></script>
 </head>
 
 <body>
@@ -24,12 +26,138 @@
       continue.</strong>
   </noscript>
 
-  <main style="display: none; visibility: hidden;">
-    <h1>FrasaL :: Translate</h1>
-    <p>$meta description</p>
-  </main>
+  <div id="app">
+    <div class="wrapper">
+      <div class="app-bar">
+        <div class="nav">
+          <img alt="FrasaL logo" src="/logo.png" />
+          <div class="logo">
+            <span class="title">FrasaL Translator</span>
+          </div>
+          <div>
+            <span class="separator"></span>
+          </div>
+          <div>
+            <ul>
+              <li class="active">Traducir</li>
+              <li class="desktop">Linguee</li>
+            </ul>
+          </div>
+        </div>
+        <ul class="desktop">
+          <li>
+            <span class="badge-container">
+              <a class="shiny" href="#">Descarga para ti</a>
+              <span class="badge">new!!</span>
+            </span>
+          </li>
+          <li>
+            <a href="#">
+              <span class="material-icons">login</span> Login
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="material-icons">menu</span>
+            </a>
+          </li>
+        </ul>
+      </div>
 
-  <div id="app"></div>
+      <div class="translate-wrapper" x-data="{ 
+          query: new URLSearchParams(window.location.search).get('q') || '',
+          translations: window.__INITIAL_TRANSLATIONS__ || [],
+          focus: null,
+          loading: false
+        }">
+        <h3>
+          Traducir de
+          <strong>
+            Julino's broken spanish
+          </strong>
+        </h3>
+
+        <div class="editor-holder">
+          <textarea name="query" x-model="query" class="textarea" autocomplete="off" autocorrect="off"
+            autocapitalize="off" spellcheck="false" @input="updateSearch; loading = true"
+            @input.debounce="fetchResults"></textarea>
+        </div>
+
+        <h3>
+          A
+          <strong>
+            proper spanish
+          </strong>
+        </h3>
+
+        <div class="editor-holder">
+          <div class="loading-spinner" x-show="loading" x-transition>
+            <div class="spinner"></div>
+          </div>
+          <div class="textarea">
+            <template x-for="(chunk, index) in translations">
+              <span :class="!!chunk.translated ? 'highlight' : ''" @click="if(!!chunk.translated) focus = chunk"
+                :key="index" x-text="chunk.translated || chunk.original"></span>
+            </template>
+          </div>
+        </div>
+
+        <template x-if="focus">
+          <div class="lemma">
+            <h2>
+              <span x-text="focus.original"></span>
+              <em>(smt.)</em>
+            </h2>
+            <div class="content">Del inglés: "<span x-text="focus.english"></span>"</div>
+          </div>
+        </template>
+      </div>
+
+      <div class="push"></div>
+    </div>
+
+    <div class="footer">
+      <div class="content">
+        <span role="img" title="love" aria-label="love">♥</span> por
+        <a target="_blank" style="color: unset;" href="https://florius.com.ar" rel="noopener noreferrer">Florius</a>.
+      </div>
+    </div>
+  </div>
 </body>
+
+<script>
+  function updateSearch(event) {
+    const params = new URLSearchParams(window.location.search);
+    params.set('q', event.target.value);
+    window.history.replaceState({}, '', `/?${params.toString()}`);
+  }
+
+  function fetchResults(event) {
+    if (!event.target.value.trim()) {
+      this.translations = [];
+      this.loading = false;
+      return;
+    }
+
+    fetch(`/api/translate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text: event.target.value
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.translations = data;
+        this.loading = false;
+      })
+      .catch(error => {
+        console.error('Translation error:', error);
+        this.loading = false;
+      });
+  }
+</script>
 
 </html>
