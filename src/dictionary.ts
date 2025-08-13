@@ -65,9 +65,14 @@ export const dict: DictionaryWord[] = [
         "spanish": "dejar de golpe"
     },
     {
-        "frasal": "poner el pie abajo",
-        "english": "put the foot down",
-        "spanish": "imponerse con firmeza"
+        "frasal": "derecha",
+        "english": "right",
+        "spanish": "justo"
+    },
+    {
+        "frasal": "izquierda",
+        "english": "left",
+        "spanish": "dejar"
     }
 ];
 
